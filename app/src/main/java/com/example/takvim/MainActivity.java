@@ -3,21 +3,18 @@ package com.example.takvim;
 import static com.example.takvim.CalendarUtils.daysInMonthArray;
 import static com.example.takvim.CalendarUtils.monthYearFromDate;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
 
 
 public class MainActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     private void setMonthView()
     {
         monthYearText.setText(monthYearFromDate(CalendarUtils.selectedDate));
-        ArrayList<LocalDate> daysInMonth = daysInMonthArray(CalendarUtils.selectedDate);
+        ArrayList<LocalDate> daysInMonth = daysInMonthArray();
 
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
@@ -55,17 +52,13 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 
     public void previousMonthAction(View view)
     {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusMonths(1);
-        }
+        CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusMonths(1);
         setMonthView();
     }
 
     public void nextMonthAction(View view)
     {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusMonths(1);
-        }
+        CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusMonths(1);
         setMonthView();
     }
 
